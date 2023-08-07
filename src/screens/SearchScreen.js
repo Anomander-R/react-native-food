@@ -1,11 +1,11 @@
 
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useResults from '../hooks/useResults';
 import ResultsList from '../components/ResultsList';
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchApi, results, errorMessage] = useResults();
 
@@ -17,27 +17,43 @@ const SearchScreen = () => {
     };
 
   return (
-    <View style={styles.backgroundCol}>
+    <>
         
         <SearchBar 
             term={searchTerm} 
             onTermChange={(newTerm)=>setSearchTerm(newTerm)}
             onTermSubmit={()=>searchApi(searchTerm)}/>
-        {errorMessage.length!==0 
-            ? <Text>{errorMessage}</Text> 
-            : <Text>We have found {results.length} results</Text>
-        }
-        <ResultsList title="Cost Effective" results={filterResultsByPrice('$')}/>
-        <ResultsList title="Bit Pricier" results={filterResultsByPrice('$$')}/>
-        <ResultsList title="Big Spender" results={[...filterResultsByPrice('$$$'), ...filterResultsByPrice('$$$$')]}/>
-    </View>
+        {/* {errorMessage.length!==0 
+            ? <Text style={styles.marginLeftStyle}>{errorMessage}</Text> 
+            : <Text style={styles.marginLeftStyle}>We have found {results.length} results</Text>
+        } */}
+        <ScrollView >
+            <ResultsList 
+                title="Cost Effective" 
+                results={filterResultsByPrice('$')} 
+                navigation={navigation}/>
+            <ResultsList 
+                title="Bit Pricier" 
+                results={filterResultsByPrice('$$')} 
+                navigation={navigation}/>
+            <ResultsList 
+                title="Big Spender" 
+                results={[...filterResultsByPrice('$$$'), ...filterResultsByPrice('$$$$')]} 
+                navigation={navigation}/>
+        </ScrollView>
+    </>
   )
 };
 
 const styles = StyleSheet.create({
     backgroundCol: {
         backgroundColor: '#FFF',
-    }
+        flex: 1,
+    },
+    marginLeftStyle: {
+        marginLeft: 15,
+    },
+
 });
 
 export default SearchScreen;

@@ -23,7 +23,7 @@ export default () => {
     }
 
     useEffect(() => {
-        searchApi('book');
+        searchApi('pasta');
     }, [])
     
     return [searchApi, results, errorMessage]
