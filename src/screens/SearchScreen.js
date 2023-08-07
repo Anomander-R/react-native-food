@@ -23,10 +23,7 @@ const SearchScreen = ({navigation}) => {
             term={searchTerm} 
             onTermChange={(newTerm)=>setSearchTerm(newTerm)}
             onTermSubmit={()=>searchApi(searchTerm)}/>
-        {/* {errorMessage.length!==0 
-            ? <Text style={styles.marginLeftStyle}>{errorMessage}</Text> 
-            : <Text style={styles.marginLeftStyle}>We have found {results.length} results</Text>
-        } */}
+
         <ScrollView >
             <ResultsList 
                 title="Cost Effective" 
